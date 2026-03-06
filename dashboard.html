@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - EduNOVA</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest"></script>
+</head>
+<body>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>EduNOVA</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-page="dashboard">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#courses" class="nav-item" data-page="courses">
+          <i class="fas fa-book"></i>
+          <span>Courses</span>
+        </a>
+        <a href="#progress" class="nav-item" data-page="progress">
+          <i class="fas fa-chart-line"></i>
+          <span>Progress</span>
+        </a>
+        <a href="#notes" class="nav-item" data-page="notes">
+          <i class="fas fa-sticky-note"></i>
+          <span>My Notes</span>
+        </a>
+        <a href="#settings" class="nav-item" data-page="settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Header -->
+      <header class="content-header">
+        <div class="header-left">
+          <h1>Welcome, <span id="userName">Student</span> 👋</h1>
+          <p class="header-subtitle">Keep learning, keep growing</p>
+        </div>
+        <div class="header-right">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search courses..." id="searchInput">
+          </div>
+          <div class="user-profile">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Student" alt="User" id="userAvatar">
+            <div class="user-menu">
+              <div class="user-info">
+                <p class="user-name">Student Name</p>
+                <p class="user-email">student@edunova.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="notifications">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD PAGE -->
+      <div class="dashboard-page page-content page-active" id="dashboardPage">
+        <!-- Quick Stats -->
+        <section class="quick-stats">
+          <div class="stat-card">
+            <div class="stat-icon learning">
+              <i class="fas fa-book-reader"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Learning Streak</h3>
+              <p class="stat-number" id="streakDays">7</p>
+              <p class="stat-label">Days</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon course">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Courses Active</h3>
+              <p class="stat-number" id="activeCourses">1</p>
+              <p class="stat-label">In progress</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon achievement">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Achievements</h3>
+              <p class="stat-number" id="badges">3</p>
+              <p class="stat-label">Badges earned</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon score">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Overall Score</h3>
+              <p class="stat-number" id="overallScore">85%</p>
+              <p class="stat-label">Excellent</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Continue Learning Section -->
+        <section class="continue-learning">
+          <div class="section-header">
+            <h2>Continue Learning</h2>
+            <button class="view-all-btn" onclick="showAllCourses()">View All Courses</button>
+          </div>
+
+          <div class="learning-cards" id="dashboardCourses">
+            <!-- Courses with topics will be loaded here -->
+          </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="recent-activity">
+          <div class="section-header">
+            <h2>Recent Activity</h2>
+          </div>
+
+          <div class="activity-list" id="activityList">
+            <!-- Activity items will be loaded here -->
+          </div>
+        </section>
+      </div>
+
+      <!-- COURSES PAGE (Topics Selection) -->
+      <div class="courses-page page-content" id="coursesPage">
+        <div class="courses-container">
+          <div class="courses-header">
+            <div>
+              <h2>Operating Systems Course</h2>
+              <p class="course-instructor">By Dr. Tech Expert</p>
+            </div>
+            <button class="back-to-dashboard-btn" onclick="switchPage('dashboard')">
+              <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+          </div>
+
+          <div class="course-info">
+            <div class="info-item">
+              <i class="fas fa-users"></i>
+              <span>2,451 Students Enrolled</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-star"></i>
+              <span>4.8 Rating (456 reviews)</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-clock"></i>
+              <span>~8 hours total</span>
+            </div>
+          </div>
+
+          <div class="topics-section">
+            <h3>Select a Topic to Learn</h3>
+            <div class="topics-grid" id="topicsGrid">
+              <!-- Topics will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS PAGE -->
+      <div class="progress-page page-content" id="progressPage">
+        <div class="section-header">
+          <h2>Your Progress</h2>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-card-large">
+            <h3>Overall Learning Progress</h3>
+            <div class="large-progress-chart">
+              <div class="progress-circle">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="8"></circle>
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="url(#gradient)" stroke-width="8" 
+                          stroke-dasharray="282.7" stroke-dashoffset="99.2" transform="rotate(-90 50 50)"></circle>
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="progress-text">
+                  <p class="progress-number" id="overallProgressPercent">35%</p>
+                  <p class="progress-label">Complete</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-card-large">
+            <h3>Topic-wise Progress</h3>
+            <div class="topic-progress" id="topicProgress">
+              <!-- Topic progress will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTES PAGE -->
+      <div class="notes-page page-content" id="notesPage">
+        <div class="section-header">
+          <h2>My Study Notes</h2>
+          <button class="btn btn-primary" id="createNoteBtn" onclick="createNewNote()">
+            <i class="fas fa-plus"></i>
+            <span>Create Note</span>
+          </button>
+        </div>
+
+        <div class="notes-container">
+          <div class="notes-grid" id="notesGrid">
+            <!-- Notes will be loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS PAGE -->
+      <div class="settings-page page-content" id="settingsPage">
+        <div class="section-header">
+          <h2>Settings</h2>
+        </div>
+
+        <div class="settings-container">
+          <div class="settings-section">
+            <div class="settings-header">
+              <h3><i class="fas fa-user"></i> Profile Settings</h3>
+            </div>
+            <form id="profileForm" class="settings-form">
+              <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Your full name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="your.email@example.com" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Profile</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Topic Detail Modal -->
+  <div class="modal" id="topicModal" style="display: none;">
+    <div class="modal-overlay" onclick="closeTopicModal()"></div>
+    <div class="modal-content topic-modal">
+      <button class="modal-close" onclick="closeTopicModal()">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <!-- Topic Content Tabs -->
+      <div class="topic-tabs">
+        <button class="tab-btn active" data-tab="intro" onclick="switchTab(event, 'intro')">
+          <i class="fas fa-book"></i> Introduction
+        </button>
+        <button class="tab-btn" data-tab="video" onclick="switchTab(event, 'video')">
+          <i class="fas fa-video"></i> Video
+        </button>
+        <button class="tab-btn" data-tab="quiz" onclick="switchTab(event, 'quiz')">
+          <i class="fas fa-question-circle"></i> Quiz
+        </button>
+      </div>
+
+      <!-- Intro Tab -->
+      <div class="tab-content active" id="intro">
+        <div class="intro-section">
+          <h2 id="topicTitle">Topic Title</h2>
+          <p id="topicDescription">Topic description will be displayed here.</p>
+
+          <div class="learning-objectives">
+            <h3>Learning Objectives</h3>
+            <ul id="objectives"></ul>
+          </div>
+
+          <div class="key-concepts">
+            <h3>Key Concepts</h3>
+            <div class="concepts-list" id="conceptsList"></div>
+          </div>
+
+          <button class="btn btn-primary" onclick="switchTab(null, 'video')">
+            <i class="fas fa-play"></i> Watch Video
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Tab -->
+      <div class="tab-content" id="video">
+        <div class="video-section">
+          <div class="video-container">
+            <!-- Lottie Animation for Video -->
+            <lottie-player
+              id="topicAnimation"
+              background="transparent"
+              speed="1"
+              loop
+              autoplay
+              style="width: 100%; height: 400px;">
+            </lottie-player>
+          </div>
+
+          <div class="video-info">
+            <h3 id="videoTitle">Video Title</h3>
+            <p id="videoDuration"><i class="fas fa-clock"></i> <span id="videoDurationTime">45</span> mins</p>
+            <p id="videoDescription">Video description will be displayed here.</p>
+          </div>
+
+          <div class="video-actions">
+            <button class="btn btn-secondary" onclick="switchTab(null, 'intro')">
+              <i class="fas fa-arrow-left"></i> Back to Intro
+            </button>
+            <button class="btn btn-primary" onclick="switchTab(null, 'quiz')">
+              <i class="fas fa-arrow-right"></i> Take Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Tab -->
+      <div class="tab-content" id="quiz">
+        <div class="quiz-section">
+          <div class="quiz-header">
+            <h2>Topic Quiz</h2>
+            <p id="quizInfo">Test your understanding of this topic</p>
+          </div>
+
+          <div class="quiz-container" id="quizContainer">
+            <!-- Quiz questions will be loaded here -->
+          </div>
+
+          <div class="quiz-actions" id="quizActions">
+            <button class="btn btn-secondary" onclick="switchTab(null, 'video')">
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button class="btn btn-primary" id="submitQuizBtn" onclick="submitQuiz()">
+              <i class="fas fa-check"></i> Submit Quiz
+            </button>
+          </div>
+
+          <!-- Quiz Result -->
+          <div class="quiz-result" id="quizResult" style="display: none;">
+            <div class="result-header">
+              <h3>Quiz Result</h3>
+            </div>
+            <div class="result-content">
+              <div class="score-circle">
+                <div class="score-value" id="scoreValue">0%</div>
+                <div class="score-label">Score</div>
+              </div>
+              <p id="resultMessage"></p>
+              <div class="result-stats">
+                <div class="stat">
+                  <span>Correct Answers:</span>
+                  <strong id="correctCount">0/0</strong>
+                </div>
+                <div class="stat">
+                  <span>Incorrect Answers:</span>
+                  <strong id="incorrectCount">0/0</strong>
+                </div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-secondary" onclick="retakeQuiz()">
+                  <i class="fas fa-redo"></i> Retake Quiz
+                </button>
+                <button class="btn btn-primary" onclick="closeTopicModal()">
+                  <i class="fas fa-check"></i> Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
